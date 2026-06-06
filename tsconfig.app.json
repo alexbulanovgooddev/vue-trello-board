@@ -4,6 +4,16 @@
 		"tsBuildInfoFile": "./node_modules/.tmp/tsconfig.app.tsbuildinfo",
 		"types": ["vite/client"],
 
+		/* Path aliases — must mirror resolve.alias in vite.config.ts */
+		"paths": {
+			"@/*": ["./src/*"],
+			"~/*": ["./src/*"],
+			"@assets/*": ["./src/assets/*"],
+			"@stores/*": ["./src/stores/*"],
+			"@components/*": ["./src/components/*"],
+			"@composables/*": ["./src/composables/*"]
+		},
+
 		/* Linting */
 		"noUnusedLocals": true,
 		"noUnusedParameters": true,

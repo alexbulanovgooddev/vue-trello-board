@@ -1,8 +1,7 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import TrelloBoard from './components/TrelloBoard.vue'
+</script>
 
 <template>
-	<div class="flex">
-		<div>Trello</div>
-		<div>Board</div>
-	</div>
+	<TrelloBoard />
 </template>
