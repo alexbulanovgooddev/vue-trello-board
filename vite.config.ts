@@ -3,6 +3,7 @@ import { resolve } from 'path'
 import { fileURLToPath, URL } from 'node:url'
 import vue from '@vitejs/plugin-vue'
 import pluginChecker from 'vite-plugin-checker'
+import tailwindcss from '@tailwindcss/vite'
 
 export default defineConfig({
 	plugins: [
@@ -15,7 +16,8 @@ export default defineConfig({
 			stylelint: {
 				lintCommand: `stylelint "${resolve(__dirname, 'src')}/**/*.{css,scss,vue}"`
 			}
-		})
+		}),
+		tailwindcss()
 	],
 	resolve: {
 		alias: {

@@ -1,3 +1,8 @@
 <script setup lang="ts"></script>
 
-<template>Trello Board</template>
+<template>
+	<div class="flex">
+		<div>Trello</div>
+		<div>Board</div>
+	</div>
+</template>
