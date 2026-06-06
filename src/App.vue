@@ -3,5 +3,7 @@ import TrelloBoard from './components/TrelloBoard.vue'
 </script>
 
 <template>
-	<TrelloBoard />
+	<div class="h-svh py-10 bg-teal-600 overflow-auto">
+		<TrelloBoard />
+	</div>
 </template>

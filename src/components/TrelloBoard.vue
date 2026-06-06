@@ -49,8 +49,11 @@ const columns = ref<Column[]>([
 </script>
 
 <template>
-	<div>
-		<div v-for="column in columns" :key="column.id">
+	<div class="px-10 flex items-start h-full gap-4 overflow-x-auto">
+		<div
+			v-for="column in columns"
+			:key="column.id"
+			class="column rounded min-w-62.5 bg-gray-200 p-5">
 			<div>
 				{{ column.title }}
 			</div>
