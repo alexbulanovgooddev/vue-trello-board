@@ -2,6 +2,7 @@
 import type { Column } from '~/types'
 import { ref } from 'vue'
 import { nanoid } from 'nanoid'
+import TrelloBoardTask from './TrelloBoardTask.vue'
 
 const columns = ref<Column[]>([
 	{
@@ -49,17 +50,22 @@ const columns = ref<Column[]>([
 </script>
 
 <template>
-	<div class="px-10 flex items-start h-full gap-4 overflow-x-auto">
+	<div class="px-10 flex-1 flex items-start gap-4 overflow-x-auto">
 		<div
 			v-for="column in columns"
 			:key="column.id"
 			class="column rounded min-w-62.5 bg-gray-200 p-5">
-			<div>
+			<div class="mb-4 font-bold">
 				{{ column.title }}
 			</div>
 
-			<div v-for="task in column.tasks" :key="task.id">
-				{{ task.title }}
+			<TrelloBoardTask
+				v-for="task in column.tasks"
+				:key="task.id"
+				:task="task" />
+
+			<div>
+				<button class="text-gray-500 cursor-pointer">+ Add a Card</button>
 			</div>
 		</div>
 	</div>
