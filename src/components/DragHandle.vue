@@ -1,11 +1,28 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import { computed } from 'vue'
+
+type Size = 'sm' | 'md'
+
+interface Props {
+	size?: Size
+}
+
+const { size = 'md' } = defineProps<Props>()
+
+const SIZE_MAP: Record<Size, number> = {
+	sm: 20,
+	md: 32,
+}
+
+const pixelSize = computed(() => SIZE_MAP[size])
+</script>
 
 <template>
-	<div class="drag-handle cursor-move">
+	<div class="drag-handle cursor-move" :class="`drag-handle--${size}`">
 		<svg
 			xmlns="http://www.w3.org/2000/svg"
-			width="32"
-			height="32"
+			:width="pixelSize"
+			:height="pixelSize"
 			viewBox="0 0 256 256">
 			<path
 				fill="currentColor"
