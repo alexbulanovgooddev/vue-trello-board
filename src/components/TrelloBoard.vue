@@ -6,6 +6,7 @@ import { useKeyModifier } from '@vueuse/core'
 import draggable from 'vuedraggable'
 import TrelloBoardTask from './TrelloBoardTask.vue'
 import DragHandle from './DragHandle.vue'
+import NewTask from './NewTask.vue'
 
 const columns = ref<Column[]>([
 	{
@@ -82,7 +83,7 @@ const alt = useKeyModifier('Alt')
 					</template>
 				</draggable>
 				<div>
-					<button class="text-gray-500 cursor-pointer">+ Add a Card</button>
+					<NewTask @add="column.tasks.push($event)" />
 				</div>
 			</div>
 		</template>
