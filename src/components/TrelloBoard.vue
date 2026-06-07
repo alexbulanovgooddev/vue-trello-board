@@ -2,6 +2,7 @@
 import type { Column, Task } from '~/types'
 import { ref } from 'vue'
 import { nanoid } from 'nanoid'
+import { useKeyModifier } from '@vueuse/core'
 import draggable from 'vuedraggable'
 import TrelloBoardTask from './TrelloBoardTask.vue'
 import DragHandle from './DragHandle.vue'
@@ -49,6 +50,8 @@ const columns = ref<Column[]>([
 		tasks: []
 	}
 ])
+
+const alt = useKeyModifier('Alt')
 </script>
 
 <template>
@@ -68,7 +71,7 @@ const columns = ref<Column[]>([
 
 				<draggable
 					v-model="column.tasks"
-					group="tasks"
+					:group="{ name: 'tasks', pull: alt ? 'clone' : true }"
 					item-key="id"
 					animation="150"
 					handle=".drag-handle">
