@@ -17,6 +17,23 @@ export default {
 	],
 	rules: {
 		'no-invalid-position-at-import-rule': null,
-		'no-duplicate-selectors': true
+		'no-duplicate-selectors': true,
+		'scss/at-rule-no-unknown': [
+			true,
+			{
+				ignoreAtRules: [
+					'reference',
+					'apply',
+					'tailwind',
+					'theme',
+					'variant',
+					'custom-variant',
+					'utility',
+					'source',
+					'plugin',
+					'config'
+				]
+			}
+		]
 	}
 }
