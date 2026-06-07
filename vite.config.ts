@@ -6,6 +6,7 @@ import pluginChecker from 'vite-plugin-checker'
 import tailwindcss from '@tailwindcss/vite'
 
 export default defineConfig({
+	base: '/vue-trello-board/',
 	plugins: [
 		vue(),
 		pluginChecker({
