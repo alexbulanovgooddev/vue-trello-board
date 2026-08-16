@@ -1,5 +1,8 @@
 <script setup lang="ts">
-import type { Task } from '@/types'
+import type { ID, Task } from '@/types'
+
+import { ref } from 'vue'
+import { onKeyStroke } from '@vueuse/core'
 
 import DragHandle from '@/components/DragHandle.vue'
 
@@ -7,14 +10,28 @@ interface Props {
 	task: Task
 }
 
-defineProps<Props>()
+const props = defineProps<Props>()
+
+const emit = defineEmits<{
+	(e: 'delete', payload: ID): void
+}>()
+
+const focused = ref<boolean>(false)
+
+onKeyStroke('Backspace', () => {
+	if (focused.value) {
+		emit('delete', props.task.id)
+	}
+})
 </script>
 
 <template>
 	<div
-		class="task mb-2 flex gap-1 rounded max-w-62.5 p-2 bg-white shadow-sm"
+		class="task mb-2 flex gap-1 rounded max-w-62.5 p-2 bg-white shadow-sm focus-visible:outline-gray-900 focus:outline-gray-900"
 		:title="new Date(task.createdAt).toLocaleDateString()"
-		tabindex="0">
+		tabindex="0"
+		@focus="focused = true"
+		@blur="focused = false">
 		<DragHandle class="mt-1" size="sm" />
 		<span>{{ task.title }}</span>
 	</div>

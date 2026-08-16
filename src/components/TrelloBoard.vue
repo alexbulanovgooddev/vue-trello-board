@@ -5,8 +5,10 @@ import { ref } from 'vue'
 import { nanoid } from 'nanoid'
 import draggable from 'vuedraggable'
 import DragHandle from '@/components/DragHandle.vue'
-import TrelloBoardTask from '@/components/TrelloBoardTask.vue'
 import { useKeyModifier } from '@vueuse/core'
+
+import NewTask from '@/components/NewTask.vue'
+import TrelloBoardTask from '@/components/TrelloBoardTask.vue'
 
 const columns = ref<Column[]>([
 	{
@@ -81,15 +83,17 @@ const alt = useKeyModifier('Alt')
 						handle=".drag-handle">
 						<template #item="{ element: task }: { element: Task }">
 							<div>
-								<TrelloBoardTask :task="task" />
+								<TrelloBoardTask
+									:task="task"
+									@delete="
+										column.tasks = column.tasks.filter(t => t.id !== $event)
+									" />
 							</div>
 						</template>
 					</draggable>
 
 					<div>
-						<button class="p-2 text-start opacity-50 cursor-pointer">
-							+ Add a card
-						</button>
+						<NewTask @add="column.tasks.push($event)" />
 					</div>
 				</div>
 			</template>
