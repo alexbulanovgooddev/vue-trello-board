@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import type { Column, Task } from '@/types'
 
-import { ref } from 'vue'
+import { ref, nextTick } from 'vue'
 import { nanoid } from 'nanoid'
 import draggable from 'vuedraggable'
 import DragHandle from '@/components/DragHandle.vue'
@@ -55,6 +55,24 @@ const columns = ref<Column[]>([
 ])
 
 const alt = useKeyModifier('Alt')
+
+function createColumn(): void {
+	const column: Column = {
+		id: nanoid(),
+		title: '',
+		tasks: []
+	}
+
+	columns.value.push(column)
+
+	nextTick(() => {
+		;(
+			document.querySelector(
+				'.column:last-of-type .title-input'
+			) as HTMLInputElement
+		)?.focus()
+	})
+}
 </script>
 
 <template>
@@ -70,9 +88,16 @@ const alt = useKeyModifier('Alt')
 				<div class="column rounded min-w-62.5 bg-gray-200 p-5">
 					<div class="mb-4 flex items-center gap-1">
 						<DragHandle />
-						<span>
-							{{ column.title }}
-						</span>
+						<input
+							v-model="column.title"
+							class="title-input w-full px-1 bg-transparent font-bold focus-visible:outline-gray-900 focus:outline-gray-900 focus-visible:bg-white focus:bg-white"
+							type="text"
+							@keyup.enter="($event.target as HTMLInputElement).blur()"
+							@keydown.backspace="
+								column.title === ''
+									? (columns = columns.filter(c => c.id !== column.id))
+									: null
+							" />
 					</div>
 
 					<draggable
@@ -98,5 +123,11 @@ const alt = useKeyModifier('Alt')
 				</div>
 			</template>
 		</draggable>
+
+		<button
+			class="rounded p-2 whitespace-nowrap bg-gray-200 opacity-50 cursor-pointer hover:opacity-100 focus:opacity-100 focus-visible:opacity-100 transition"
+			@click="createColumn">
+			+ Add Another Column
+		</button>
 	</div>
 </template>
