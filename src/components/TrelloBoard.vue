@@ -1,16 +1,16 @@
 <script setup lang="ts">
 import type { Column, Task } from '@/types'
 
-import { ref, nextTick } from 'vue'
+import { watch, nextTick } from 'vue'
 import { nanoid } from 'nanoid'
 import draggable from 'vuedraggable'
 import DragHandle from '@/components/DragHandle.vue'
-import { useKeyModifier } from '@vueuse/core'
+import { useKeyModifier, useLocalStorage } from '@vueuse/core'
 
 import NewTask from '@/components/NewTask.vue'
 import TrelloBoardTask from '@/components/TrelloBoardTask.vue'
 
-const columns = ref<Column[]>([
+const columns = useLocalStorage<Column[]>('trelloBoard', [
 	{
 		id: nanoid(),
 		title: 'Backlog',
@@ -73,6 +73,16 @@ function createColumn(): void {
 		)?.focus()
 	})
 }
+
+watch(
+	columns,
+	() => {
+		// синхронизация с бэкендом
+	},
+	{
+		deep: true
+	}
+)
 </script>
 
 <template>
