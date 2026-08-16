@@ -3,6 +3,7 @@ import type { Column } from '@/types'
 
 import { ref } from 'vue'
 import { nanoid } from 'nanoid'
+import draggable from 'vuedraggable'
 import TrelloBoardTask from '@/components/TrelloBoardTask.vue'
 
 const columns = ref<Column[]>([
@@ -52,28 +53,31 @@ const columns = ref<Column[]>([
 
 <template>
 	<div class="px-10 py-1 flex-1 flex items-start gap-4 overflow-x-auto">
-		<div class="flex items-start gap-4">
-			<div
-				v-for="column in columns"
-				:key="column.id"
-				class="rounded min-w-62.5 bg-gray-200 p-5">
-				<div class="mb-4 flex items-center gap-1">
-					{{ column.title }}
-				</div>
+		<draggable
+			v-model="columns"
+			group="columns"
+			item-key="id"
+			class="flex items-start gap-4">
+			<template #item="{ element: column }: { element: Column }">
+				<div class="rounded min-w-62.5 bg-gray-200 p-5">
+					<div class="mb-4 flex items-center gap-1">
+						{{ column.title }}
+					</div>
 
-				<div>
-					<TrelloBoardTask
-						v-for="task in column.tasks"
-						:key="task.id"
-						:task="task" />
-				</div>
+					<div>
+						<TrelloBoardTask
+							v-for="task in column.tasks"
+							:key="task.id"
+							:task="task" />
+					</div>
 
-				<div>
-					<button class="p-2 text-start opacity-50 cursor-pointer">
-						+ Add a card
-					</button>
+					<div>
+						<button class="p-2 text-start opacity-50 cursor-pointer">
+							+ Add a card
+						</button>
+					</div>
 				</div>
-			</div>
-		</div>
+			</template>
+		</draggable>
 	</div>
 </template>
