@@ -1,11 +1,12 @@
 <script setup lang="ts">
-import type { Column } from '@/types'
+import type { Column, Task } from '@/types'
 
 import { ref } from 'vue'
 import { nanoid } from 'nanoid'
 import draggable from 'vuedraggable'
 import DragHandle from '@/components/DragHandle.vue'
 import TrelloBoardTask from '@/components/TrelloBoardTask.vue'
+import { useKeyModifier } from '@vueuse/core'
 
 const columns = ref<Column[]>([
 	{
@@ -50,6 +51,8 @@ const columns = ref<Column[]>([
 		tasks: []
 	}
 ])
+
+const alt = useKeyModifier('Alt')
 </script>
 
 <template>
@@ -70,12 +73,18 @@ const columns = ref<Column[]>([
 						</span>
 					</div>
 
-					<div>
-						<TrelloBoardTask
-							v-for="task in column.tasks"
-							:key="task.id"
-							:task="task" />
-					</div>
+					<draggable
+						v-model="column.tasks"
+						:group="{ name: 'tasks', pull: alt ? 'clone' : true }"
+						item-key="id"
+						animation="150"
+						handle=".drag-handle">
+						<template #item="{ element: task }: { element: Task }">
+							<div>
+								<TrelloBoardTask :task="task" />
+							</div>
+						</template>
+					</draggable>
 
 					<div>
 						<button class="p-2 text-start opacity-50 cursor-pointer">
