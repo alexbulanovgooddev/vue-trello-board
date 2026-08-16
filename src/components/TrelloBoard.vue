@@ -65,7 +65,7 @@ const alt = useKeyModifier('Alt')
 			handle=".drag-handle"
 			class="flex items-start gap-4">
 			<template #item="{ element: column }: { element: Column }">
-				<div class="rounded min-w-62.5 bg-gray-200 p-5">
+				<div class="column rounded min-w-62.5 bg-gray-200 p-5">
 					<div class="mb-4 flex items-center gap-1">
 						<DragHandle />
 						<span>
