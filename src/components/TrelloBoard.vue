@@ -3,6 +3,7 @@ import type { Column } from '@/types'
 
 import { ref } from 'vue'
 import { nanoid } from 'nanoid'
+import TrelloBoardTask from '@/components/TrelloBoardTask.vue'
 
 const columns = ref<Column[]>([
 	{
@@ -61,12 +62,16 @@ const columns = ref<Column[]>([
 				</div>
 
 				<div>
-					<div
+					<TrelloBoardTask
 						v-for="task in column.tasks"
 						:key="task.id"
-						class="mb-2 flex gap-1 rounded max-w-62.5 p-2 bg-white shadow-sm">
-						<span>{{ task.title }}</span>
-					</div>
+						:task="task" />
+				</div>
+
+				<div>
+					<button class="p-2 text-start opacity-50 cursor-pointer">
+						+ Add a card
+					</button>
 				</div>
 			</div>
 		</div>
