@@ -4,6 +4,7 @@ import type { Column } from '@/types'
 import { ref } from 'vue'
 import { nanoid } from 'nanoid'
 import draggable from 'vuedraggable'
+import DragHandle from '@/components/DragHandle.vue'
 import TrelloBoardTask from '@/components/TrelloBoardTask.vue'
 
 const columns = ref<Column[]>([
@@ -57,11 +58,16 @@ const columns = ref<Column[]>([
 			v-model="columns"
 			group="columns"
 			item-key="id"
+			animation="150"
+			handle=".drag-handle"
 			class="flex items-start gap-4">
 			<template #item="{ element: column }: { element: Column }">
 				<div class="rounded min-w-62.5 bg-gray-200 p-5">
 					<div class="mb-4 flex items-center gap-1">
-						{{ column.title }}
+						<DragHandle />
+						<span>
+							{{ column.title }}
+						</span>
 					</div>
 
 					<div>
